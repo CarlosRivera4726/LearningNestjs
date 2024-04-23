@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -7,6 +7,10 @@ import { PrismaService } from 'src/prisma.service';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
   async create(createUserDto: CreateUserDto) {
+    const userExists = await this.validateUserExists(createUserDto.email);
+    if (userExists) {
+      throw new HttpException('El correo ya se encuentra registrado', 409); // 409 Conflict
+    }
     return await this.prisma.user.create({ data: createUserDto });
   }
 
@@ -30,8 +34,11 @@ export class UsersService {
       },
     });
   }
-
   async remove(id: string) {
     return await this.prisma.user.delete({ where: { id } });
+  }
+
+  validateUserExists(email: string) {
+    return this.prisma.user.findUnique({ where: { email } });
   }
 }
