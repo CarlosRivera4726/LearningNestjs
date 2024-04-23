@@ -10,10 +10,15 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto) {
     const userExists = await this.validateUserExists(createUserDto.email);
-    if (userExists) {
+    if (userExists)
       throw new HttpException('El correo ya se encuentra registrado', 409); // 409 Conflict
-    }
-    return await this.prisma.user.create({ data: createUserDto });
+
+    const passwordEncrypted = this.encryptPassword(createUserDto.password);
+    const createUserDtoEncrypted = {
+      ...createUserDto,
+      password: passwordEncrypted,
+    };
+    return await this.prisma.user.create({ data: createUserDtoEncrypted });
   }
 
   async findAll() {
