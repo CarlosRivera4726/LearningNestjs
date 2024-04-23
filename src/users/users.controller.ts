@@ -17,8 +17,14 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    console.info('createUserDto: ', createUserDto);
-    return this.usersService.create(createUserDto);
+    const passwordEncrypted = this.usersService.encryptPassword(
+      createUserDto.password,
+    );
+    const createUserDtoEncrypted = {
+      ...createUserDto,
+      password: passwordEncrypted,
+    };
+    return this.usersService.create(createUserDtoEncrypted);
   }
 
   @Get()

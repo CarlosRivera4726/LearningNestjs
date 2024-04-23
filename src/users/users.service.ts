@@ -2,10 +2,12 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
+
   async create(createUserDto: CreateUserDto) {
     const userExists = await this.validateUserExists(createUserDto.email);
     if (userExists) {
@@ -36,6 +38,10 @@ export class UsersService {
   }
   async remove(id: string) {
     return await this.prisma.user.delete({ where: { id } });
+  }
+
+  encryptPassword(password: string): string {
+    return bcrypt.hashSync(password, 10).toString();
   }
 
   validateUserExists(email: string) {
