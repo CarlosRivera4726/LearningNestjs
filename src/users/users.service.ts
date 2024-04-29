@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma.service';
-import * as bcrypt from 'bcrypt';
+import { encryptPassword } from 'src/auth/password.helper';
 
 @Injectable()
 export class UsersService {
@@ -13,7 +13,7 @@ export class UsersService {
     if (userExists)
       throw new HttpException('El correo ya se encuentra registrado', 409); // 409 Conflict
 
-    const passwordEncrypted = this.encryptPassword(createUserDto.password);
+    const passwordEncrypted = encryptPassword(createUserDto.password);
     const createUserDtoEncrypted = {
       ...createUserDto,
       password: passwordEncrypted,
@@ -43,10 +43,6 @@ export class UsersService {
   }
   async remove(id: string) {
     return await this.prisma.user.delete({ where: { id } });
-  }
-
-  encryptPassword(password: string): string {
-    return bcrypt.hashSync(password, 10).toString();
   }
 
   validateUserExists(email: string) {
