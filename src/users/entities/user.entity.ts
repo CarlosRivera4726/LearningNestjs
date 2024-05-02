@@ -1,4 +1,4 @@
-interface Address {
+export interface Address {
   id: string;
   street: string;
   city: string;
@@ -13,7 +13,7 @@ export class User {
   name: string;
   password: string;
   seller: boolean;
-  address: Address;
+  address?: Address;
   createdAt: Date;
   updatedAt: Date;
   //product   product?

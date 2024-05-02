@@ -11,6 +11,8 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+
+  app.useGlobalGuards();
   await app.listen(3000);
 }
 bootstrap();
