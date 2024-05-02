@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 
-export function encryptPassword(password: string): string {
-  return bcrypt.hashSync(password, 10).toString();
+export async function encryptPassword(password: string): Promise<string> {
+  return bcrypt.hash(password, 10).toString();
 }
 
 export async function comparePassword(
