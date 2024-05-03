@@ -8,11 +8,12 @@ import {
 import { AuthService, RegistrationStatus } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginUserDto } from 'src/users/dto/login-user.dto';
+import { Public } from 'src/core/decorator/public_meta';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
-
+  @Public()
   @Post('register')
   public async register(
     @Body() createUserDto: CreateUserDto,
@@ -24,6 +25,7 @@ export class AuthController {
     }
     return result;
   }
+  @Public()
   @Post('login')
   public async login(@Body() loginUserDto: LoginUserDto): Promise<any> {
     return await this.authService.login(loginUserDto);
