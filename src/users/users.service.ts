@@ -54,15 +54,16 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
+    const passwordEncrypted = await encryptPassword(updateUserDto.password);
+    const updateUserDtoEncrypted = {
+      ...updateUserDto,
+      password: passwordEncrypted,
+    };
     return await this.prisma.user.update({
       where: {
-        id: id,
+        id,
       },
-      data: {
-        name: updateUserDto.name,
-        email: updateUserDto.email,
-        password: updateUserDto.password,
-      },
+      data: updateUserDtoEncrypted,
     });
   }
   async remove(id: string) {

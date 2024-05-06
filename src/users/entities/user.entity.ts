@@ -12,10 +12,10 @@ export class User {
   email: string;
   name: string;
   password: string;
-  seller: boolean;
   address?: Address;
   createdAt: Date;
   updatedAt: Date;
+  role: string;
   //product   product?
   //order     order?
 }
