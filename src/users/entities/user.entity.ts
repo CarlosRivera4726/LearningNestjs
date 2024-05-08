@@ -1,3 +1,5 @@
+import { Role } from '@prisma/client';
+
 export interface Address {
   id: string;
   street: string;
@@ -15,7 +17,7 @@ export class User {
   address?: Address;
   createdAt: Date;
   updatedAt: Date;
-  role: string;
+  roles?: Role[];
   //product   product?
   //order     order?
 }

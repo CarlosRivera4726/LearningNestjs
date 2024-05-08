@@ -15,6 +15,11 @@ export class ProductService {
     return await this.prisma.product.findMany({
       include: {
         seller: true,
+        CategoriesOnProducts: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
   }

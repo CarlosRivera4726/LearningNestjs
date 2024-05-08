@@ -10,16 +10,19 @@ import {
 import { ProductService } from './product.service';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProductDto } from './dto/create-product.dto';
+import { Public } from 'src/core/decorator/public_meta';
 
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
+  @Public()
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.productService.findAll();

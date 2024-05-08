@@ -23,15 +23,29 @@ export class UsersService {
       ...createUserDto,
       password: passwordEncrypted,
     };
-    return await this.prisma.user.create({ data: createUserDtoEncrypted });
+    return await this.prisma.user.create({
+      data: {
+        ...createUserDtoEncrypted,
+        roles: {
+          connect: createUserDto.roles,
+        },
+      },
+    });
   }
 
   async findAll() {
-    return await this.prisma.user.findMany();
+    return await this.prisma.user.findMany({
+      include: {
+        roles: true,
+      },
+    });
   }
 
   async findOne(id: string) {
-    return await this.prisma.user.findUnique({ where: { id } });
+    return await this.prisma.user.findUnique({
+      where: { id },
+      include: { roles: true },
+    });
   }
 
   //use by user module to change user password
@@ -49,7 +63,9 @@ export class UsersService {
     }
     return await this.prisma.user.update({
       where: { id },
-      data: { password: await encryptPassword(payload.new_password) },
+      data: {
+        password: await encryptPassword(payload.new_password),
+      },
     });
   }
 
@@ -63,7 +79,10 @@ export class UsersService {
       where: {
         id,
       },
-      data: updateUserDtoEncrypted,
+      data: {
+        ...updateUserDtoEncrypted,
+        roles: { connect: updateUserDto.roles },
+      },
     });
   }
   async remove(id: string) {
@@ -73,6 +92,9 @@ export class UsersService {
   async findByLogin({ email, password }: LoginUserDto): Promise<FormatLogin> {
     const user = await this.prisma.user.findFirst({
       where: { email },
+      include: {
+        roles: true,
+      },
     });
 
     if (!user) {

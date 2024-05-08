@@ -21,7 +21,6 @@ export class CreateUserDto {
   @MinLength(3)
   lastName: string;
 
-  @IsString()
   @IsNotEmpty()
-  role: Role;
+  roles?: Role[];
 }

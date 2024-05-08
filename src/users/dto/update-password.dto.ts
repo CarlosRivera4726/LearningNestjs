@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class UpdatePasswordDto {
@@ -10,4 +11,6 @@ export class UpdatePasswordDto {
   @IsString()
   @MinLength(8)
   old_password: string;
+
+  roles: Role[];
 }
