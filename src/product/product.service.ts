@@ -12,7 +12,11 @@ export class ProductService {
   }
 
   async findAll() {
-    return await this.prisma.product.findMany();
+    return await this.prisma.product.findMany({
+      include: {
+        seller: true,
+      },
+    });
   }
 
   findOne(id: number) {
