@@ -40,17 +40,35 @@ model User {
 }
 
 model Product {
-  id          String         @id @default(cuid())
-  name        String
-  description String
-  price       Float
-  seller      User           @relation(fields: [sellerId], references: [id])
-  sellerId    String
-  image       String
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  quantity    Float          @default(0)
-  orders      ProductOrder[]
+  id                   String                 @id @default(cuid())
+  name                 String
+  description          String
+  price                Float
+  seller               User                   @relation(fields: [sellerId], references: [id])
+  sellerId             String
+  image                String
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  quantity             Float                  @default(0)
+  orders               ProductOrder[]
+  CategoriesOnProducts CategoriesOnProducts[]
+}
+
+model Category {
+  id       String                 @id @default(cuid())
+  name     String                 @unique
+  products CategoriesOnProducts[]
+}
+
+model CategoriesOnProducts {
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([productId, categoryId])
 }
 
 model ProductOrder {
