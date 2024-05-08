@@ -50,7 +50,7 @@ model Product {
   name                 String
   description          String
   price                Float
-  seller               User                   @relation(fields: [sellerId], references: [id])
+  seller               User                   @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId             String
   image                String
   createdAt            DateTime               @default(now())
