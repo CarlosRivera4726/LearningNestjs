@@ -5,13 +5,13 @@
 
 */
 -- DropForeignKey
-ALTER TABLE `rolesonusers` DROP FOREIGN KEY `RolesOnUsers_roleId_fkey`;
+ALTER TABLE `RolesOnUsers` DROP FOREIGN KEY `RolesOnUsers_roleId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `rolesonusers` DROP FOREIGN KEY `RolesOnUsers_userId_fkey`;
+ALTER TABLE `RolesOnUsers` DROP FOREIGN KEY `RolesOnUsers_userId_fkey`;
 
 -- DropTable
-DROP TABLE `rolesonusers`;
+DROP TABLE `RolesOnUsers`;
 
 -- CreateTable
 CREATE TABLE `_RoleToUser` (

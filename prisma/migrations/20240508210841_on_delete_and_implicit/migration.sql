@@ -6,22 +6,22 @@
 
 */
 -- DropForeignKey
-ALTER TABLE `categoriesonproducts` DROP FOREIGN KEY `CategoriesOnProducts_categoryId_fkey`;
+ALTER TABLE `CategoriesOnProducts` DROP FOREIGN KEY `CategoriesOnProducts_categoryId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `categoriesonproducts` DROP FOREIGN KEY `CategoriesOnProducts_productId_fkey`;
+ALTER TABLE `CategoriesOnProducts` DROP FOREIGN KEY `CategoriesOnProducts_productId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `productorder` DROP FOREIGN KEY `ProductOrder_orderId_fkey`;
+ALTER TABLE `ProductOrder` DROP FOREIGN KEY `ProductOrder_orderId_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `productorder` DROP FOREIGN KEY `ProductOrder_productId_fkey`;
+ALTER TABLE `ProductOrder` DROP FOREIGN KEY `ProductOrder_productId_fkey`;
 
 -- DropTable
-DROP TABLE `categoriesonproducts`;
+DROP TABLE `CategoriesOnProducts`;
 
 -- DropTable
-DROP TABLE `productorder`;
+DROP TABLE `ProductOrder`;
 
 -- CreateTable
 CREATE TABLE `_CategoryToProduct` (
