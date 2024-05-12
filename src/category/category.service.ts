@@ -6,11 +6,10 @@ import { PrismaService } from 'src/prisma.service';
 @Injectable()
 export class CategoryService {
   constructor(private prisma: PrismaService) {}
-  create(createCategoryDto: CreateCategoryDto) {
-    return this.prisma.category.create({
-      data: {
-        ...createCategoryDto,
-      },
+  create(createCategoryDto: CreateCategoryDto[]) {
+    return this.prisma.category.createMany({
+      data: createCategoryDto,
+      skipDuplicates: true,
     });
   }
 

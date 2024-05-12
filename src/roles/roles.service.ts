@@ -8,16 +8,19 @@ export class RolesService {
   constructor(private prisma: PrismaService) {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  create(createRoleDto: CreateRoleDto) {
-    return 'This action adds a new role';
+  async create(createRoleDto: CreateRoleDto[]) {
+    return await this.prisma.role.createMany({
+      data: createRoleDto,
+      skipDuplicates: true,
+    });
   }
 
-  findAll() {
-    return this.prisma.role.findMany();
+  async findAll() {
+    return await this.prisma.role.findMany();
   }
 
-  findOne(name: string) {
-    return this.prisma.role.findFirst({ where: { name } });
+  async findOne(name: string) {
+    return await this.prisma.role.findFirst({ where: { name } });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

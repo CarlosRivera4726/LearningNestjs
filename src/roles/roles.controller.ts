@@ -17,7 +17,7 @@ export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
   @Post()
-  create(@Body() createRoleDto: CreateRoleDto) {
+  create(@Body() createRoleDto: CreateRoleDto[]) {
     return this.rolesService.create(createRoleDto);
   }
 
