@@ -9,7 +9,8 @@ import { AuthService, RegistrationStatus } from './auth.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginUserDto } from 'src/users/dto/login-user.dto';
 import { Public } from 'src/core/decorator/public_meta';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
