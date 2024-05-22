@@ -1,4 +1,4 @@
-import { Category } from '@prisma/client';
+import { category as Category } from '@prisma/client';
 import { IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
 
 export class CreateProductDto {
