@@ -1,4 +1,4 @@
-import { Role } from '@prisma/client';
+import { role as Role } from '@prisma/client';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class UpdatePasswordDto {

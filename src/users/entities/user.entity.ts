@@ -1,4 +1,4 @@
-import { Role } from '@prisma/client';
+import { role as Role } from '@prisma/client';
 
 export interface Address {
   id: string;
