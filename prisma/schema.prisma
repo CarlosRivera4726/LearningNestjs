@@ -13,73 +13,73 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Address {
+model address {
   id        String   @id @default(cuid())
   street    String
   city      String
   state     String
   zip       String
-  user      User?    @relation(fields: [userId], references: [id])
+  user      user?    @relation(fields: [userId], references: [id])
   userId    String?  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model User {
+model user {
   id        String    @id @unique @default(cuid())
   email     String    @unique
   name      String
   lastName  String
   password  String
-  roles     Role[]
-  address   Address?
+  roles     role[]
+  address   address?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  products  Product[]
-  orders    Order[]
+  products  product[]
+  orders    order[]
 }
 
-model Role {
+model role {
   id    String @id @default(cuid())
   name  String @unique
-  users User[]
+  users user[]
 }
 
-model Product {
+model product {
   id          String     @id @default(cuid())
   name        String
   description String
   price       Float
-  seller      User       @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  seller      user       @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId    String
   image       String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   quantity    Float      @default(0)
-  orders      Order[]
-  categories  Category[]
+  orders      order[]
+  categories  category[]
 }
 
-model Category {
+model category {
   id       String    @id @default(cuid())
   name     String    @unique
-  products Product[]
+  products product[]
 }
 
-model Order {
+model order {
   id         String    @id @default(cuid())
-  products   Product[]
-  user       User      @relation(fields: [userId], references: [id])
+  products   product[]
+  user       user      @relation(fields: [userId], references: [id])
   userId     String
   totalPrice Float
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  Invoice    Invoice[]
+  Invoice    invoice[]
 }
 
-model Invoice {
+model invoice {
   id        String   @id @default(cuid())
-  order     Order    @relation(fields: [orderId], references: [id])
+  order     order    @relation(fields: [orderId], references: [id])
   orderId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
