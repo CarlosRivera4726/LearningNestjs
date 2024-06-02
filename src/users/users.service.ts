@@ -27,7 +27,38 @@ export class UsersService {
       data: {
         ...createUserDtoEncrypted,
         roles: {
-          connect: createUserDto.roles,
+          connectOrCreate:[
+            {
+              create: { name: 'USUARIO' },
+              where: { name: 'USUARIO' }
+            }
+          ]
+        },
+      },
+    });
+  }
+
+  async createAdmin(createUserDto: CreateUserDto) 
+  {
+    const userExists = await this.validateUserExists(createUserDto.email);
+    if (userExists)
+      throw new HttpException('El correo ya se encuentra registrado', 409); // 409 Conflict
+
+    const passwordEncrypted = await encryptPassword(createUserDto.password);
+    const createUserDtoEncrypted = {
+      ...createUserDto,
+      password: passwordEncrypted,
+    };
+    return await this.prisma.user.create({
+      data: {
+        ...createUserDtoEncrypted,
+        roles: {
+          connectOrCreate:[
+            {
+              create: { name: 'ADMINISTRADOR' },
+              where: { name: 'ADMINISTRADOR' }
+            }
+          ]
         },
       },
     });
