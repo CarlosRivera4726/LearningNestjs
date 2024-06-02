@@ -55,7 +55,7 @@ model product {
   image       String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  quantity    Float      @default(0)
+  quantity    Float      @default(1)
   orders      order[]
   categories  category[]
 }

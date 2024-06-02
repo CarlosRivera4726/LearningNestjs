@@ -18,7 +18,6 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  @Public()
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
@@ -30,6 +29,7 @@ export class ProductController {
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.productService.findOne(+id);
   }

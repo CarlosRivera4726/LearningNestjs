@@ -1,5 +1,5 @@
 import { category as Category } from '@prisma/client';
-import { IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, Max, Min, MinLength } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -22,4 +22,10 @@ export class CreateProductDto {
 
   @IsNotEmpty()
   categories: Category[];
+
+  @IsNumber()
+  @IsNotEmpty()
+  @Min(1)
+  @Max(200)
+  quantity: number;
 }
