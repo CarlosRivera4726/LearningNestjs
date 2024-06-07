@@ -8,6 +8,7 @@ import { PrismaService } from './prisma.service';
 import { UsersService } from './users/users.service';
 import { RolesModule } from './roles/roles.module';
 import { CategoryModule } from './category/category.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CategoryModule } from './category/category.module';
     AuthModule,
     RolesModule,
     CategoryModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [AuthService, PrismaService, UsersService],
