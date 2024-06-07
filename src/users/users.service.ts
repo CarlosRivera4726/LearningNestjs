@@ -27,19 +27,18 @@ export class UsersService {
       data: {
         ...createUserDtoEncrypted,
         roles: {
-          connectOrCreate:[
+          connectOrCreate: [
             {
               create: { name: 'USUARIO' },
-              where: { name: 'USUARIO' }
-            }
-          ]
+              where: { name: 'USUARIO' },
+            },
+          ],
         },
       },
     });
   }
 
-  async createAdmin(createUserDto: CreateUserDto) 
-  {
+  async createAdmin(createUserDto: CreateUserDto) {
     const userExists = await this.validateUserExists(createUserDto.email);
     if (userExists)
       throw new HttpException('El correo ya se encuentra registrado', 409); // 409 Conflict
@@ -53,12 +52,12 @@ export class UsersService {
       data: {
         ...createUserDtoEncrypted,
         roles: {
-          connectOrCreate:[
+          connectOrCreate: [
             {
               create: { name: 'ADMINISTRADOR' },
-              where: { name: 'ADMINISTRADOR' }
-            }
-          ]
+              where: { name: 'ADMINISTRADOR' },
+            },
+          ],
         },
       },
     });
@@ -123,8 +122,17 @@ export class UsersService {
   async findByLogin({ email, password }: LoginUserDto): Promise<FormatLogin> {
     const user = await this.prisma.user.findFirst({
       where: { email },
-      include: {
-        roles: true,
+      select: {
+        name: true,
+        lastName: true,
+        email: true,
+        password: true,
+        roles: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
 
@@ -146,7 +154,9 @@ export class UsersService {
 
   async findByPayload(payload: any) {
     const { email } = payload;
-    return await this.prisma.user.findFirst({ where: { email } });
+    return await this.prisma.user.findFirst({
+      where: { email },
+    });
   }
 
   validateUserExists(email: string) {
